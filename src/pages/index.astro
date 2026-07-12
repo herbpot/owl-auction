@@ -15,11 +15,14 @@ const pct = (n?: number) => (n == null ? '—' : n.toFixed(1) + '%');
 ---
 
 <Base title={title} description={description} keywords={keywords} canonical="https://herbpot.github.io/owl-auction/">
-  <h1>🦉 OWL 경매인사이트</h1>
-  <p class="lead">대법원 경매정보에서 실제 경매 물건을 수집 → ROI 계산 → 권리분석한 무료 리포트. 감정가·최저매각가·예상수익률·인수권리를 한눈에 확인하세요.</p>
+  <div class="hero">
+    <h1>실제 경매 물건, 숫자로 증명합니다</h1>
+    <p class="lead">대법원 경매정보에서 실제 물건을 수집 → ROI 계산 → 권리분석한 무료 리포트. 감정가·최저매각가·예상수익률·인수권리를 한눈에 확인하세요.</p>
+  </div>
 
-  <h2 style="font-size:24px;margin:32px 0 16px;">최신 경매 물건</h2>
+  <h2 style="font-size:22px;margin:0 0 18px;letter-spacing:-.02em;">최신 경매 물건</h2>
 
+  <div class="cards">
   {reports.map((r) => (
     <article class="report-card">
       <h2><a href={`/owl-auction/reports/${r.id}/`}>{r.data.title}</a>{r.data.proOnly && <span class="pro-badge">PRO</span>}</h2>
@@ -35,6 +38,7 @@ const pct = (n?: number) => (n == null ? '—' : n.toFixed(1) + '%');
       </div>
     </article>
   ))}
+  </div>
 
   <a class="glossary-link" href="https://herbpot.github.io/owl-auction/glossary">📖 경매·부동산 용어집 보기</a>
 
