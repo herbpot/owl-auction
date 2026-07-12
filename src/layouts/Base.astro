@@ -109,9 +109,10 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
         display: inline-block; font-family: system-ui, sans-serif; font-size: 11px; font-weight: 600;
         padding: 2px 9px; border-radius: 4px; margin-left: 8px; vertical-align: middle;
       }
-      .risk-LOW { background: #d7ecd9; color: #1f6b3b; }
-      .risk-MEDIUM { background: #f4ecd2; color: #8a6d1f; }
-      .risk-HIGH { background: #f3d9d6; color: #8a2f24; }
+      /* Kami 준수: 유채색 0개, Ink Blue 틴트로 위험도 표현 */
+      .risk-LOW { background: #e4ecf5; color: #1b365d; }
+      .risk-MEDIUM { background: #d0dce9; color: #1b365d; }
+      .risk-HIGH { background: #1b365d; color: #faf9f5; }
       .pro-cta {
         background: var(--ink-blue); color: #fff; border-radius: 10px;
         padding: 24px; margin: 36px 0; text-align: center;
@@ -156,6 +157,25 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
       .fact-table th { color: var(--olive); font-weight: 600; width: 38%; background: var(--ivory); }
       .fact-table td { color: var(--near-black); }
       .num { font-variant-numeric: tabular-nums; }
+      /* 전문용어 툴팁 (장벽 제거) */
+      .term { border-bottom: 1px dotted var(--ink-blue); cursor: help; color: var(--ink-blue); position: relative; }
+      .term:hover::after {
+        content: attr(data-tip); position: absolute; left: 0; top: 100%;
+        background: var(--near-black); color: var(--parchment);
+        font-family: system-ui, sans-serif; font-size: 12px; line-height: 1.4;
+        padding: 6px 10px; border-radius: 6px; max-width: 240px; margin-top: 4px; z-index: 10;
+        white-space: normal;
+      }
+      /* 모바일 대응 (P3) */
+      @media (max-width: 600px) {
+        h1 { font-size: 28px; }
+        .wrap { padding: 0 16px; }
+        .report-card { padding: 18px 16px; }
+        .nav a { font-size: 14px; padding: 10px 0; display: inline-block; min-height: 44px; }
+        .brand { font-size: 18px; }
+        .lead { font-size: 17px; }
+        .article-body { font-size: 16px; }
+      }
     </style>
   </head>
   <body>
