@@ -166,10 +166,11 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
         padding: 6px 10px; border-radius: 6px; max-width: 240px; margin-top: 4px; z-index: 10;
         white-space: normal;
       }
+      /* 용어집 링크 (장벽 제거) */
+      .glossary-link { display: inline-block; margin: 8px 0 0; font-family: system-ui, sans-serif; font-size: 13px; color: var(--ink-blue); border-bottom: 1px dotted var(--ink-blue); }
       /* 모바일 대응 (P3) */
       @media (max-width: 600px) {
         h1 { font-size: 28px; }
-        .wrap { padding: 0 16px; }
         .report-card { padding: 18px 16px; }
         .nav a { font-size: 14px; padding: 10px 0; display: inline-block; min-height: 44px; }
         .brand { font-size: 18px; }
