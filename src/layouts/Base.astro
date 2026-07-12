@@ -1,0 +1,185 @@
+---
+import { ClientRouter } from 'astro:transitions';
+
+export interface Props {
+  title: string;
+  description: string;
+  keywords?: string[];
+  canonical?: string;
+  ogType?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  keywords = [],
+  canonical,
+  ogType = 'website',
+  ogImage = '/owl-auction/og-default.png',
+} = Astro.props;
+
+const siteUrl = 'https://herbpot.github.io';
+const pageUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).href;
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+    <link rel="canonical" href={pageUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:site_name" content="OWL 경매인사이트" />
+    <meta property="og:locale" content="ko_KR" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+
+    <link rel="icon" type="image/svg+xml" href="/owl-auction/favicon.svg" />
+    <link rel="sitemap" href="/owl-auction/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+    <ClientRouter />
+
+    <style is:global>
+      :root {
+        --parchment: #f5f4ed;
+        --ivory: #faf9f5;
+        --warm-sand: #e8e6dc;
+        --ink-blue: #1b365d;
+        --ink-light: #2d5a8a;
+        --near-black: #141413;
+        --dark-warm: #3d3d3a;
+        --olive: #504e49;
+        --stone: #6b6a64;
+        --tag-tint: #e4ecf5;
+        --maxw: 760px;
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--parchment);
+        color: var(--near-black);
+        font-family: Georgia, 'Times New Roman', 'Charter', serif;
+        font-weight: 400;
+        line-height: 1.55;
+        font-size: 18px;
+      }
+      a { color: var(--ink-blue); text-decoration: none; }
+      a:hover { color: var(--ink-light); text-decoration: underline; }
+      h1, h2, h3, h4 {
+        font-family: Georgia, 'Charter', serif;
+        font-weight: 500;
+        color: var(--near-black);
+        line-height: 1.2;
+      }
+      .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+      .site-header {
+        border-bottom: 1px solid var(--warm-sand);
+        background: var(--ivory);
+      }
+      .site-header .wrap {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 18px 20px;
+      }
+      .brand { font-weight: 500; font-size: 20px; color: var(--ink-blue); letter-spacing: .3px; }
+      .brand:hover { text-decoration: none; }
+      .nav a { margin-left: 18px; font-size: 15px; color: var(--olive); }
+      .main { padding: 40px 0 80px; }
+      .tag {
+        display: inline-block; background: var(--tag-tint); color: var(--ink-blue);
+        font-family: system-ui, sans-serif; font-size: 12px; font-weight: 500;
+        padding: 3px 10px; border-radius: 4px; margin: 0 6px 6px 0;
+      }
+      .risk-tag {
+        display: inline-block; font-family: system-ui, sans-serif; font-size: 11px; font-weight: 600;
+        padding: 2px 9px; border-radius: 4px; margin-left: 8px; vertical-align: middle;
+      }
+      .risk-LOW { background: #d7ecd9; color: #1f6b3b; }
+      .risk-MEDIUM { background: #f4ecd2; color: #8a6d1f; }
+      .risk-HIGH { background: #f3d9d6; color: #8a2f24; }
+      .pro-cta {
+        background: var(--ink-blue); color: #fff; border-radius: 10px;
+        padding: 24px; margin: 36px 0; text-align: center;
+      }
+      .pro-cta h3 { color: #fff; margin: 0 0 8px; }
+      .pro-cta p { color: #e4ecf5; margin: 0 0 14px; font-size: 15px; font-family: system-ui, sans-serif; }
+      .pro-cta a.btn {
+        display: inline-block; background: var(--ivory); color: var(--ink-blue);
+        font-family: system-ui, sans-serif; font-weight: 500; font-size: 15px;
+        padding: 11px 22px; border-radius: 6px;
+      }
+      .pro-cta a.btn:hover { text-decoration: none; background: var(--warm-sand); }
+      .ad-slot {
+        background: var(--warm-sand); border: 1px dashed var(--stone);
+        color: var(--stone); text-align: center; font-family: system-ui, sans-serif;
+        font-size: 13px; padding: 40px 12px; margin: 30px 0; border-radius: 8px;
+      }
+      .ad-slot code { color: var(--dark-warm); }
+      footer {
+        border-top: 1px solid var(--warm-sand); background: var(--ivory);
+        color: var(--stone); font-family: system-ui, sans-serif; font-size: 13px;
+      }
+      footer .wrap { padding: 22px 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+      .report-card {
+        background: var(--ivory); border: 1px solid var(--warm-sand);
+        border-radius: 10px; padding: 22px 24px; margin: 0 0 18px;
+        box-shadow: 0 0 0 1px rgba(20,20,19,0.02);
+      }
+      .report-card h2 { margin: 0 0 8px; font-size: 22px; }
+      .report-card .meta { color: var(--stone); font-family: system-ui, sans-serif; font-size: 13px; margin-bottom: 10px; }
+      .pro-badge { background: var(--ink-blue); color: #fff; font-family: system-ui, sans-serif; font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+      .roi-pill {
+        display: inline-block; font-family: system-ui, sans-serif; font-size: 13px; font-weight: 600;
+        background: var(--ink-blue); color: #fff; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+      }
+      .article-body { font-size: 18px; line-height: 1.6; }
+      .article-body blockquote { border-left: 4px solid var(--ink-blue); margin: 20px 0; padding: 6px 18px; color: var(--dark-warm); background: var(--ivory); }
+      .article-body pre { background: var(--near-black); color: #f5f4ed; padding: 16px; border-radius: 8px; overflow: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+      .lead { font-size: 19px; color: var(--dark-warm); margin: 0 0 28px; }
+      .fact-table { width: 100%; border-collapse: collapse; margin: 0 0 28px; font-family: system-ui, sans-serif; font-size: 14px; }
+      .fact-table th, .fact-table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--warm-sand); vertical-align: top; }
+      .fact-table th { color: var(--olive); font-weight: 600; width: 38%; background: var(--ivory); }
+      .fact-table td { color: var(--near-black); }
+      .num { font-variant-numeric: tabular-nums; }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/owl-auction/">🦉 OWL 경매인사이트</a>
+        <nav class="nav">
+          <a href="/owl-auction/">물건</a>
+          <a href="https://herbpot.github.io/owl-auction/pro">Pro</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="wrap">
+        <slot />
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>© {new Date().getFullYear()} OWL 경매인사이트 — 실제 경매 물건 · 정량 ROI · 권리분석</span>
+        <span>비용 0원 · GitHub Pages</span>
+      </div>
+    </footer>
+  </body>
+</html>
