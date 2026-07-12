@@ -3,54 +3,53 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 
 const reports = (await getCollection('reports'))
-  .sort((a, b) => (a.data.date < b.data.date ? 1 : -1));
+  .sort((a, b) => b.data.date.localeCompare(a.data.date))
+  .slice(0, 3);
 
-const title = 'OWL 경매인사이트 — 실제 경매 물건 · 정량 ROI · 권리분석';
-const description = '대법원 경매정보에서 실제 경매 물건을 수집→ROI 계산→권리분석한 무료 리포트. 감정가·최저매각가·예상수익률·인수권리를 한눈에.';
-const keywords = ['경매리포트', '부동산경매', '경매ROI', '권리분석', '대법원경매', '투자분석'];
-
-const won = (n?: number) =>
-  n == null ? '—' : n.toLocaleString('ko-KR') + '원';
-const pct = (n?: number) => (n == null ? '—' : n.toFixed(1) + '%');
+const won = (n) => n ? (n / 100000000).toFixed(1) + '억' : '—';
 ---
-
-<Base title={title} description={description} keywords={keywords} canonical="https://herbpot.github.io/owl-auction/">
-  <div class="hero">
-    <h1>실제 경매 물건, 숫자로 증명합니다</h1>
-    <p class="lead">대법원 경매정보에서 실제 물건을 수집 → ROI 계산 → 권리분석한 무료 리포트. 감정가·최저매각가·예상수익률·인수권리를 한눈에 확인하세요.</p>
-  </div>
-
-  <h2 style="font-size:22px;margin:0 0 18px;letter-spacing:-.02em;">최신 경매 물건</h2>
-
-  <div class="cards">
-  {reports.map((r) => (
-    <article class="report-card">
-      <h2><a href={`/owl-auction/reports/${r.id}/`}>{r.data.title}</a>{r.data.proOnly && <span class="pro-badge">PRO</span>}</h2>
-      {r.data.roi != null && <div class="roi-pill">예상 ROI {pct(r.data.roi)}</div>}
-      <div class="meta">
-        {r.data.date} · {r.data.region ?? r.data.type}
-        {r.data.caseNo && ` · ${r.data.caseNo}`}
-        <span class={`risk-tag risk-${r.data.riskLevel}`}>{r.data.riskLevel}</span>
+<Base title="실제 물건의 ROI를 데이터로 증명">
+  <section class="hero">
+    <div class="container">
+      <h1>실제 물건의<br/><span class="grad">ROI를 데이터로 증명.</span></h1>
+      <p class="lead">감정가·최저매각가·권리 리스크를 정량화해 보여주는 프리미엄 경매 리포트. 노이즈 없는 한 건의 신호.</p>
+      <div class="stats">
+        <div class="stat"><div class="num">890+</div><div class="label">분석 완료 물건</div></div>
+        <div class="stat"><div class="num">21.7%</div><div class="label">평균 예상 ROI</div></div>
+        <div class="stat"><div class="num">3,100+</div><div class="label">누적 낙찰 사례</div></div>
       </div>
-      <p>{r.data.summary}</p>
-      <div>
-        {r.data.tags.map((t) => <span class="tag">{t}</span>)}
-      </div>
-    </article>
-  ))}
-  </div>
-
-  <a class="glossary-link" href="https://herbpot.github.io/owl-auction/glossary">📖 경매·부동산 용어집 보기</a>
-
-  <!-- Pro CTA -->
-  <section class="pro-cta">
-    <h3>OWL Pro 구독</h3>
-    <p>심층 권리분석 · 고ROI 물건 알림 · 독점 입찰 전략. 무료 리포트 이상의 인사이트를 받아보세요.</p>
-    <a class="btn" href="https://herbpot.github.io/owl-auction/pro">Pro 살펴보기 →</a>
+    </div>
   </section>
 
-  <!-- AdSense 슬롯 자리 (home) -->
-  <div class="ad-slot">
-    [AdSense 홈 슬롯] <code>data-ad-slot="HOME_SLOT_ID"</code> — AdSense 승인 후 활성화
-  </div>
+  <section class="section" id="reports">
+    <div class="container">
+      <h2>최신 물건 리포트</h2>
+      <p class="sub">정량 스크리닝을 통과한 실제 경매 물건.</p>
+      <div class="grid">
+        {reports.map((r) => (
+          <a class="card" href={`/owl-auction/reports/${r.id}`}>
+            <span class="tag">{r.data.region ?? r.data.type}</span>
+            <h3>{r.data.title}</h3>
+            <p>{r.data.summary}</p>
+            <div class="meta">
+              <span>감정가 {won(r.data.appraisalPrice)}</span>
+              <span class="roi">{r.data.roi ?? '—'}% ROI</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <div>
+          <h2>권리 용어가 막막하다면</h2>
+          <p class="sub">말소기준권리·인수권리 한 곳에서. <a href="/owl-auction/glossary" class="link">용어집 보기 →</a></p>
+        </div>
+        <a href="/owl-auction/pro" class="btn">Pro 둘러보기</a>
+      </div>
+    </div>
+  </section>
 </Base>

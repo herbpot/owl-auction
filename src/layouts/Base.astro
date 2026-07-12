@@ -1,204 +1,184 @@
 ---
-import { ClientRouter } from 'astro:transitions';
-
-export interface Props {
-  title: string;
-  description: string;
-  keywords?: string[];
-  canonical?: string;
-  ogType?: string;
-  ogImage?: string;
-}
-
-const {
-  title,
-  description,
-  keywords = [],
-  canonical,
-  ogType = 'website',
-  ogImage = '/owl-auction/og-default.png',
-} = Astro.props;
-
-const siteUrl = 'https://herbpot.github.io';
-const pageUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).href;
-const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+// 낙찰 (NAKCHAL) — B트랙 레이아웃
+// 인우 님 브랜드 픽 시 아래 BRAND / BRAND_EN / BASE 만 교체하면 끝.
+const { title, description = '실제 물건의 정량 ROI와 권리분석을 데이터로 증명하는 경매 리포트' } = Astro.props;
+const BRAND = '낙찰';
+const BRAND_EN = 'NAKCHAL';
+const BASE = '/owl-auction';
 ---
-
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
-    <link rel="canonical" href={pageUrl} />
-    <meta property="og:type" content={ogType} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={pageUrl} />
-    <meta property="og:image" content={fullOgImage} />
-    <meta property="og:site_name" content="OWL 경매인사이트" />
-    <meta property="og:locale" content="ko_KR" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={fullOgImage} />
-    <link rel="icon" type="image/svg+xml" href="/owl-auction/favicon.svg" />
-    <link rel="sitemap" href="/owl-auction/sitemap-index.xml" />
-    <meta name="generator" content={Astro.generator} />
-    <ClientRouter />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title} · {BRAND}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href={`${BASE}/favicon.svg`} />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style is:global>
+    :root {
+      --accent-from: #10b981;
+      --accent-to: #14b8a6;
+      --gradient: linear-gradient(135deg, var(--accent-from), var(--accent-to));
+      --bg: #ffffff;
+      --fg: #0a0a0f;
+      --muted: #6b7280;
+      --line: #ececf1;
+      --surface: #fbfdfc;
+      --radius: 16px;
+      --container: 1040px;
+      --shadow-sm: 0 1px 2px rgba(16,18,30,.04), 0 4px 16px rgba(16,18,30,.04);
+      --shadow-lg: 0 8px 30px rgba(16,18,30,.10);
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      letter-spacing: -0.02em;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
 
-    <style is:global>
-      @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
-      :root {
-        --bg: #ffffff;
-        --surface: #f8fafc;
-        --surface-2: #f1f5f9;
-        --ink: #0f172a;
-        --ink-soft: #475569;
-        --muted: #94a3b8;
-        --line: #e2e8f0;
-        --brand: #059669;
-        --brand-2: #10b981;
-        --brand-grad: linear-gradient(135deg, #059669 0%, #10b981 100%);
-        --pos: #10b981;
-        --radius: 16px;
-        --shadow: 0 4px 24px rgba(15,23,42,.06);
-        --shadow-hover: 0 12px 40px rgba(5,150,105,.15);
-        --maxw: 960px;
-      }
-      * { box-sizing: border-box; }
-      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-      body {
-        margin: 0; background: var(--bg); color: var(--ink);
-        font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
-        font-weight: 400; line-height: 1.65; font-size: 17px;
-        -webkit-font-smoothing: antialiased;
-      }
-      a { color: var(--brand); text-decoration: none; transition: .2s; }
-      a:hover { color: var(--brand-2); }
-      h1,h2,h3,h4 { font-family: 'Pretendard', system-ui, sans-serif; font-weight: 700; color: var(--ink); line-height: 1.25; letter-spacing: -.02em; }
+    /* Header — sticky glass */
+    .site-header { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(12px); -webkit-backdrop-filter: saturate(180%) blur(12px); background: rgba(255,255,255,0.72); border-bottom: 1px solid var(--line); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .wordmark { display: flex; align-items: baseline; gap: 8px; }
+    .wm-ko { font-size: 20px; font-weight: 800; letter-spacing: -0.04em; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .wm-en { font-size: 11px; letter-spacing: 0.18em; color: var(--muted); font-weight: 600; }
+    .nav { display: flex; gap: 28px; font-size: 15px; font-weight: 600; color: var(--muted); }
+    .nav a { transition: color .15s ease; }
+    .nav a:hover { color: var(--fg); }
+    .nav-pro { color: var(--accent-to) !important; }
 
-      .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+    /* Hero */
+    .hero { padding: 104px 0 72px; }
+    .hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 850; letter-spacing: -0.05em; line-height: 1.04; margin: 0 0 22px; }
+    .hero .grad { background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero .lead { font-size: 19px; color: var(--muted); max-width: 580px; margin: 0 0 44px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .stat { padding: 28px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .stat .num { font-size: 42px; font-weight: 850; letter-spacing: -0.04em; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .stat .label { font-size: 14px; color: var(--muted); margin-top: 8px; }
 
-      .site-header {
-        position: sticky; top: 0; z-index: 50;
-        background: rgba(255,255,255,.8); backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--line);
-      }
-      .site-header .wrap { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
-      .brand { font-weight: 800; font-size: 19px; color: var(--ink); letter-spacing: -.03em; }
-      .brand span { background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-      .nav a { margin-left: 22px; font-size: 15px; font-weight: 600; color: var(--ink-soft); }
-      .nav a:hover { color: var(--brand); }
+    /* Sections + cards */
+    .section { padding: 80px 0; }
+    .section h2 { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; margin: 0 0 6px; }
+    .section .sub { color: var(--muted); margin: 0 0 36px; font-size: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card { display: block; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-sm); transition: transform .2s ease, box-shadow .2s ease; }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .card .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent-to) 12%, white); color: var(--accent-to); margin-bottom: 14px; }
+    .card h3 { font-size: 18px; font-weight: 750; margin: 0 0 10px; line-height: 1.35; }
+    .card p { font-size: 14px; color: var(--muted); margin: 0 0 16px; }
+    .card .meta { font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+    .card .meta .roi { color: var(--accent-to); font-weight: 800; font-size: 15px; }
 
-      .main { padding: 48px 0 80px; }
+    /* CTA */
+    .cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 40px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .cta h2 { margin-bottom: 4px; }
+    .link { color: var(--accent-to); font-weight: 700; }
+    .btn { display: inline-block; padding: 13px 26px; border-radius: 999px; background: var(--gradient); color: #fff; font-weight: 700; font-size: 15px; box-shadow: var(--shadow-sm); transition: transform .2s ease, box-shadow .2s ease; white-space: nowrap; }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
-      .hero {
-        background: var(--brand-grad); border-radius: 24px;
-        padding: 44px 40px; margin-bottom: 40px; color: #fff;
-        box-shadow: var(--shadow-hover);
-      }
-      .hero h1 { color: #fff; font-size: 32px; margin: 0 0 12px; letter-spacing: -.03em; }
-      .hero .lead { color: rgba(255,255,255,.92); font-size: 18px; margin: 0; line-height: 1.6; }
+    /* Prose (report pages) */
+    .prose { max-width: 760px; margin: 0 auto; padding: 72px 24px 40px; }
+    .prose .back { display: inline-block; font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+    .prose .back:hover { color: var(--fg); }
+    .prose .tags { display: flex; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .prose .tag { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent-to) 12%, white); color: var(--accent-to); }
+    .prose h1 { font-size: clamp(26px, 4.5vw, 38px); font-weight: 850; letter-spacing: -0.04em; line-height: 1.2; margin: 0 0 10px; }
+    .prose .date { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
+    .prose .lede { font-size: 18px; color: var(--muted); margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+    .prose h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; margin: 40px 0 14px; }
+    .prose h3 { font-size: 19px; font-weight: 750; margin: 28px 0 10px; }
+    .prose p { font-size: 16px; color: #1f2230; }
+    .prose ul, .prose ol { font-size: 16px; color: #1f2230; padding-left: 22px; }
+    .prose li { margin: 6px 0; }
+    .prose blockquote { margin: 24px 0; padding: 14px 18px; border-left: 3px solid var(--accent-to); background: var(--surface); border-radius: 0 10px 10px 0; color: var(--muted); font-size: 15px; }
+    .prose table { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 14px; }
+    .prose th, .prose td { border: 1px solid var(--line); padding: 12px 14px; text-align: left; }
+    .prose th { background: var(--surface); font-weight: 700; }
+    .prose .glosslink { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+    .factbox { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin: 32px 0; }
+    .fact { padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .fact .k { font-size: 12px; color: var(--muted); }
+    .fact .v { font-size: 22px; font-weight: 800; margin-top: 6px; letter-spacing: -0.03em; }
+    .fact .v.grad { background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .risk-LOW { color: #059669; font-weight: 700; }
+    .risk-MEDIUM { color: #d97706; font-weight: 700; }
+    .risk-HIGH { color: #dc2626; font-weight: 700; }
 
-      .cards { display: grid; gap: 18px; }
-      .report-card {
-        background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
-        padding: 24px; box-shadow: var(--shadow); transition: .25s;
-      }
-      .report-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--brand); }
-      .report-card h2 { margin: 0 0 8px; font-size: 20px; }
-      .report-card h2 a { color: var(--ink); }
-      .report-card h2 a:hover { color: var(--brand); }
-      .meta { color: var(--muted); font-size: 13px; margin-bottom: 10px; font-weight: 500; }
-      .roi-pill {
-        display: inline-block; font-size: 13px; font-weight: 700;
-        background: var(--brand-grad); color: #fff; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px;
-      }
-      .pro-badge { background: var(--ink); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 6px; margin-left: 8px; vertical-align: middle; }
-      /* risk: Ink 틴트 기반 단일강조 (Kami 정신 계승) */
-      .risk-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 6px; margin-left: 8px; vertical-align: middle; }
-      .risk-LOW { background: #e4ecf5; color: #1b365d; }
-      .risk-MEDIUM { background: #d0dce9; color: #1b365d; }
-      .risk-HIGH { background: #1b365d; color: #faf9f5; }
-      .tag {
-        display: inline-block; background: var(--surface-2); color: var(--ink-soft);
-        font-size: 12px; font-weight: 600; padding: 4px 11px; border-radius: 8px; margin: 0 6px 6px 0;
-      }
+    /* Glossary */
+    .gloss { max-width: 760px; margin: 0 auto; padding: 72px 24px 40px; }
+    .gloss h1 { font-size: 36px; font-weight: 850; letter-spacing: -0.04em; margin: 0 0 8px; }
+    .gloss .sub { color: var(--muted); margin: 0 0 40px; }
+    .term { padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .term dt { font-size: 18px; font-weight: 750; margin-bottom: 6px; }
+    .term dt .en { font-size: 13px; color: var(--muted); font-weight: 600; margin-left: 8px; letter-spacing: 0.02em; }
+    .term dd { margin: 0; color: var(--muted); font-size: 15px; }
 
-      .term { border-bottom: 1px dotted var(--brand); cursor: help; color: var(--brand); position: relative; font-weight: 600; }
-      .term:hover::after {
-        content: attr(data-tip); position: absolute; left: 0; top: 100%;
-        background: var(--ink); color: #fff; font-family: system-ui, sans-serif; font-size: 12px; line-height: 1.5;
-        padding: 8px 12px; border-radius: 8px; max-width: 260px; margin-top: 6px; z-index: 20; white-space: normal;
-      }
+    /* Pro */
+    .pro { max-width: 920px; margin: 0 auto; padding: 88px 24px 40px; text-align: center; }
+    .pro h1 { font-size: clamp(34px, 6vw, 52px); font-weight: 850; letter-spacing: -0.04em; margin: 0 0 16px; }
+    .pro .lead { color: var(--muted); font-size: 18px; max-width: 520px; margin: 0 auto 48px; }
+    .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: left; max-width: 680px; margin: 0 auto; }
+    .plan { padding: 32px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-sm); }
+    .plan.featured { border-color: transparent; background: var(--gradient); color: #fff; box-shadow: var(--shadow-lg); }
+    .plan .name { font-size: 15px; font-weight: 700; color: var(--muted); }
+    .plan.featured .name { color: rgba(255,255,255,.85); }
+    .plan .price { font-size: 38px; font-weight: 850; letter-spacing: -0.04em; margin: 10px 0; }
+    .plan .price small { font-size: 15px; font-weight: 600; color: var(--muted); }
+    .plan.featured .price small { color: rgba(255,255,255,.8); }
+    .plan ul { list-style: none; padding: 0; margin: 20px 0 0; }
+    .plan li { font-size: 14px; padding: 8px 0; border-top: 1px solid var(--line); }
+    .plan.featured li { border-top-color: rgba(255,255,255,.2); }
+    .plan .cta-btn { display: block; text-align: center; margin-top: 24px; padding: 12px; border-radius: 999px; font-weight: 700; font-size: 15px; background: var(--surface); color: var(--fg); transition: transform .2s ease; }
+    .plan.featured .cta-btn { background: #fff; color: var(--accent-to); }
+    .plan .cta-btn:hover { transform: translateY(-2px); }
 
-      .pro-cta {
-        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-        padding: 32px; margin: 40px 0; text-align: center; box-shadow: var(--shadow);
-      }
-      .pro-cta h3 { color: var(--ink); margin: 0 0 10px; font-size: 22px; }
-      .pro-cta p { color: var(--ink-soft); margin: 0 0 18px; font-size: 15px; }
-      .pro-cta a.btn {
-        display: inline-block; background: var(--brand-grad); color: #fff; font-weight: 700; font-size: 15px;
-        padding: 13px 28px; border-radius: 12px; box-shadow: var(--shadow-hover);
-      }
-      .pro-cta a.btn:hover { transform: translateY(-2px); }
+    /* Footer */
+    .site-footer { border-top: 1px solid var(--line); padding: 40px 0; margin-top: 40px; color: var(--muted); font-size: 14px; }
+    .site-footer .wm-ko { font-weight: 800; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .site-footer p { margin: 8px 0 0; max-width: 540px; }
 
-      .ad-slot {
-        background: var(--surface); border: 1px dashed var(--line); color: var(--muted);
-        text-align: center; font-size: 13px; padding: 40px 12px; margin: 30px 0; border-radius: var(--radius);
-      }
-      .ad-slot code { color: var(--ink-soft); }
+    @keyframes fadeup { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .hero, .section, .prose, .gloss, .pro { animation: fadeup .5s ease both; }
 
-      .glossary-link { display: inline-block; margin: 8px 0 0; font-size: 13px; font-weight: 600; color: var(--brand); border-bottom: 1px dotted var(--brand); }
-
-      footer { border-top: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 13px; }
-      footer .wrap { padding: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-
-      .article-body { font-size: 17px; line-height: 1.7; }
-      .article-body blockquote { border-left: 4px solid var(--brand); margin: 24px 0; padding: 8px 20px; color: var(--ink-soft); background: var(--surface); border-radius: 0 12px 12px 0; }
-      .article-body pre { background: var(--ink); color: #e2e8f0; padding: 18px; border-radius: 12px; overflow: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
-      .lead { font-size: 19px; color: var(--ink-soft); margin: 0 0 28px; }
-
-      @media (max-width: 640px) {
-        .wrap { padding: 0 18px; }
-        .site-header .wrap { padding: 12px 18px; }
-        .hero { padding: 32px 24px; border-radius: 20px; }
-        .hero h1 { font-size: 25px; }
-        h1 { font-size: 28px; }
-        .report-card { padding: 20px 18px; }
-        .nav a { font-size: 14px; padding: 10px 0; display: inline-block; min-height: 44px; }
-        .brand { font-size: 17px; }
-        .lead { font-size: 17px; }
-        .main { padding: 32px 0 60px; }
-      }
-    </style>
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="wrap">
-        <a class="brand" href="/owl-auction/">🦉 <span>OWL</span> 경매인사이트</a>
-        <nav class="nav">
-          <a href="/owl-auction/">물건</a>
-          <a href="https://herbpot.github.io/owl-auction/pro">Pro</a>
-        </nav>
-      </div>
-    </header>
-
-    <main class="main">
-      <div class="wrap">
-        <slot />
-      </div>
-    </main>
-
-    <footer>
-      <div class="wrap">
-        <span>© {new Date().getFullYear()} OWL 경매인사이트</span>
-        <span>비용 0원 · GitHub Pages</span>
-      </div>
-    </footer>
-  </body>
+    @media (max-width: 760px) {
+      .grid, .stats, .plans { grid-template-columns: 1fr; }
+      .hero { padding: 64px 0 48px; }
+      .section { padding: 56px 0; }
+      .nav { gap: 16px; font-size: 14px; }
+      .cta { flex-direction: column; align-items: flex-start; padding: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href={`${BASE}/`} class="wordmark">
+        <span class="wm-ko">{BRAND}</span>
+        <span class="wm-en">{BRAND_EN}</span>
+      </a>
+      <nav class="nav">
+        <a href={`${BASE}/#reports`}>물건</a>
+        <a href={`${BASE}/glossary`}>용어집</a>
+        <a href={`${BASE}/pro`} class="nav-pro">Pro</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <slot />
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span class="wm-ko">{BRAND}</span>
+      <p>본 사이트의 경매 정보는 예시·샘플 데이터입니다. 실제 입찰 전 반드시 등기부등본·현장답사·전문 권리분석을 병행하세요.</p>
+    </div>
+  </footer>
+</body>
 </html>

@@ -1,30 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
-
-const title = 'OWL Pro — 심층 경매 권리분석 & 고ROI 알림';
-const description = '경매 물건의 말소기준권리·인수권리 심층 분석, 고ROI 신건 실시간 알림, 독점 입찰 전략을 제공하는 OWL Pro 구독 페이지.';
-const keywords = ['경매Pro', '권리분석', '말소기준권리', '인수권리', '경매알림', '입찰전략'];
 ---
-
-<Base title={title} description={description} keywords={keywords} canonical="https://herbpot.github.io/owl-auction/pro">
-  <h1>🦉 OWL Pro</h1>
-  <p class="lead">무료 리포트로는 부족한 분들을 위한 심층 경매 인텔리전스.</p>
-
-  <h2 style="font-size:22px;margin:28px 0 14px;">Pro만의 차별점</h2>
-  <ul style="line-height:1.9;">
-    <li><strong>심층 권리분석</strong> — 말소기준권리·인수권리·유치권·가압류 정밀 산정</li>
-    <li><strong>고ROI 신건 알림</strong> — ROI 15% 이상 신규 물건 실시간 통보</li>
-    <li><strong>명도 리스크 진단</strong> — 임차인 대항력·확정일자·유상명도 비용 시산</li>
-    <li><strong>입찰 전략 메모</strong> — 낙찰가 상한·응찰 타이밍 가이드</li>
-  </ul>
-
-  <section class="pro-cta">
-    <h3>OWL Pro 시작하기</h3>
-    <p>실제 경매 물건의 권리분석까지. 입찰 전 반드시 확인하세요.</p>
-    <a class="btn" href="https://herbpot.github.io/owl-auction/">무료 리포트 먼저 보기 →</a>
-  </section>
-
-  <div class="ad-slot">
-    [AdSense Pro 슬롯] <code>data-ad-slot="PRO_SLOT_ID"</code> — AdSense 승인 후 활성화
+<Base title="낙찰 Pro">
+  <div class="pro">
+    <h1>한 건의 확신을.</h1>
+    <p class="lead">무료 스크리닝 이상의 정밀 권리분석. 매일 새로 올라오는 물건의 말소기준권리·인수권리를 독점하세요.</p>
+    <div class="plans">
+      <div class="plan">
+        <div class="name">FREE</div>
+        <div class="price">0원<small> / 월</small></div>
+        <ul>
+          <li>주간 물건 브리프</li>
+          <li>공개 리포트 열람</li>
+          <li>권리 용어집 전체 이용</li>
+        </ul>
+        <a href="/owl-auction/" class="cta-btn">지금 둘러보기</a>
+      </div>
+      <div class="plan featured">
+        <div class="name">PRO</div>
+        <div class="price">12,900원<small> / 월</small></div>
+        <ul>
+          <li>매일 신규 물건 심층 리포트</li>
+          <li>말소기준권리·인수권리 정밀 분석</li>
+          <li>ROI 시산 시트 무제한</li>
+          <li>명도 리스크 점수 제공</li>
+        </ul>
+        <a href="/owl-auction/" class="cta-btn">Pro 시작하기</a>
+      </div>
+    </div>
   </div>
 </Base>

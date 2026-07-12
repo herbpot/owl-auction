@@ -4,69 +4,37 @@ import Base from '../../layouts/Base.astro';
 
 export async function getStaticPaths() {
   const reports = await getCollection('reports');
-  return reports.map((r) => ({
-    params: { slug: r.id },
-    props: { report: r },
+  return reports.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
   }));
 }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
 
-const { report } = Astro.props;
-const { Content } = await render(report);
-const { title, date, type, region, caseNo, court, address, appraisalPrice, minBidPrice, roi, riskLevel, tags, summary, keywords, canonical, proOnly, adSlot } = report.data;
-
-const pageCanonical = canonical ?? `https://herbpot.github.io/owl-auction/reports/${report.id}/`;
-const ogImage = `/owl-auction/og-${report.id}.png`;
-
-const won = (n?: number) => (n == null ? '—' : n.toLocaleString('ko-KR') + '원');
-const pct = (n?: number) => (n == null ? '—' : n.toFixed(1) + '%');
-const discount = (a?: number, b?: number) =>
-  a == null || b == null || a === 0 ? '—' : (((a - b) / a) * 100).toFixed(1) + '%';
+const won = (n) => n ? Math.round(n).toLocaleString('ko-KR') + '원' : '—';
 ---
+<Base title={d.title}>
+  <article class="prose">
+    <a href="/owl-auction/" class="back">← 전체 물건</a>
+    <div class="tags">
+      <span class="tag">{d.region ?? d.type}</span>
+      {d.riskLevel && <span class="tag">위험도 {d.riskLevel}</span>}
+      {d.proOnly && <span class="tag">Pro</span>}
+    </div>
+    <h1>{d.title}</h1>
+    <p class="date">{d.date} · {d.court} · {d.caseNo}</p>
+    <p class="lede">{d.summary}</p>
 
-<Base title={`${title} — OWL 경매인사이트`} description={summary} keywords={keywords} canonical={pageCanonical} ogType="article" ogImage={ogImage}>
-  <p style="font-family:system-ui,sans-serif;font-size:13px;color:var(--stone);margin-bottom:8px;">
-    <a href="/owl-auction/">← 물건 목록</a>
-  </p>
-  <h1>{title}{proOnly && <span class="pro-badge">PRO</span>}</h1>
-  <div class="meta" style="color:var(--stone);font-family:system-ui,sans-serif;font-size:13px;margin-bottom:8px;">
-    {date} · {type}
-    <span class={`risk-tag risk-${riskLevel}`}>{riskLevel}</span>
-  </div>
-  {roi != null && <div class="roi-pill">예상 ROI {pct(roi)}</div>}
+    <div class="factbox">
+      <div class="fact"><div class="k">감정가</div><div class="v">{won(d.appraisalPrice)}</div></div>
+      <div class="fact"><div class="k">최저매각가</div><div class="v">{won(d.minBidPrice)}</div></div>
+      <div class="fact"><div class="k">예상 ROI</div><div class="v grad">{d.roi ?? '—'}%</div></div>
+      <div class="fact"><div class="k">위험도</div><div class="v risk-{d.riskLevel}">{d.riskLevel}</div></div>
+    </div>
 
-  <!-- 경매 물건 핵심 사실 테이블 -->
-  <table class="fact-table">
-    <tbody>
-      {region && <tr><th>권역</th><td>{region}</td></tr>}
-      {caseNo && <tr><th>사건번호</th><td class="num">{caseNo}</td></tr>}
-      {court && <tr><th>관할법원</th><td>{court}</td></tr>}
-      {address && <tr><th>소재지</th><td>{address}</td></tr>}
-      {appraisalPrice != null && <tr><th>감정가</th><td class="num">{won(appraisalPrice)}</td></tr>}
-      {minBidPrice != null && <tr><th>최저매각가</th><td class="num">{won(minBidPrice)}</td></tr>}
-      {(appraisalPrice != null && minBidPrice != null) && <tr><th>최저매각가 비율</th><td class="num">{discount(appraisalPrice, minBidPrice)} (감정가 대비)</td></tr>}
-      {roi != null && <tr><th>예상 ROI</th><td class="num">{pct(roi)}</td></tr>}
-    </tbody>
-  </table>
-
-  <div style="margin-bottom:24px;">
-    {tags.map((t) => <span class="tag">{t}</span>)}
-  </div>
-
-  <div class="article-body">
     <Content />
-  </div>
-
-  <!-- Pro 전환 CTA (비 PRO 리포트 하단) -->
-  {!proOnly && (
-    <section class="pro-cta">
-      <h3>이 리포트가 도움이 되었나요?</h3>
-      <p>심층 권리분석과 독점 입찰 전략은 OWL Pro에서. 무료 리포트 이상의 인사이트를 받아보세요.</p>
-      <a class="btn" href="https://herbpot.github.io/owl-auction/pro">OWL Pro 시작 →</a>
-    </section>
-  )}
-
-  <!-- AdSense 슬롯 자리 (article) -->
-  <div class="ad-slot">
-    [AdSense 본문 슬롯] <code>data-ad-slot="{adSlot ?? 'ARTICLE_SLOT_ID'}"</code> — AdSense 승인 후 활성화
-  </div>
+    <div class="glosslink">관련 권리 용어는 <a href="/owl-auction/glossary" class="link">용어집</a>에서 확인하세요.</div>
+  </article>
 </Base>
