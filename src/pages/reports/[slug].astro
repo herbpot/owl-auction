@@ -12,29 +12,21 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
-
-const won = (n) => n ? Math.round(n).toLocaleString('ko-KR') + '원' : '—';
 ---
+
 <Base title={d.title}>
   <article class="prose">
-    <a href="/owl-auction/" class="back">← 전체 물건</a>
+    <a href="/owl-auction/" class="back">← 전체 리포트</a>
     <div class="tags">
       <span class="tag">{d.region ?? d.type}</span>
-      {d.riskLevel && <span class="tag">위험도 {d.riskLevel}</span>}
       {d.proOnly && <span class="tag">Pro</span>}
     </div>
     <h1>{d.title}</h1>
-    <p class="date">{d.date} · {d.court} · {d.caseNo}</p>
+    <p class="date">{d.date}</p>
     <p class="lede">{d.summary}</p>
 
-    <div class="factbox">
-      <div class="fact"><div class="k">감정가</div><div class="v">{won(d.appraisalPrice)}</div></div>
-      <div class="fact"><div class="k">최저매각가</div><div class="v">{won(d.minBidPrice)}</div></div>
-      <div class="fact"><div class="k">예상 ROI</div><div class="v grad">{d.roi ?? '—'}%</div></div>
-      <div class="fact"><div class="k">위험도</div><div class="v risk-{d.riskLevel}">{d.riskLevel}</div></div>
-    </div>
-
     <Content />
-    <div class="glosslink">관련 권리 용어는 <a href="/owl-auction/glossary" class="link">용어집</a>에서 확인하세요.</div>
+
+    <div class="glosslink">관련 용어는 <a href="/owl-auction/glossary" class="link">용어집</a>에서 확인하세요.</div>
   </article>
 </Base>

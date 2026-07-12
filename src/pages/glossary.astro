@@ -2,22 +2,22 @@
 import Base from '../layouts/Base.astro';
 
 const terms = [
-  { ko: '낙찰', en: 'Successful Bid', desc: '경매에서 최고가 매수신고인으로 선정되어 물건을 취득하는 것. 입찰가를 써내고 낙찰자로 확정됨.' },
-  { ko: '감정가', en: 'Appraisal Price', desc: '감정평가법인이 산정한 물건의 객관적 가치. 최저매각가 산정의 기준점이 된다.' },
-  { ko: '최저매각가', en: 'Minimum Bid', desc: '감정가의 일정 비율(보통 60~80%)로 정해진 최소 입찰가. 이보다 낮으면 유찰된다.' },
-  { ko: '말소기준권리', en: 'Cancellation Basis Right', desc: '이 권리보다 후순위인 권리는 매각으로 소멸하는 기준점이 되는 권리.' },
-  { ko: '인수권리', en: 'Assumed Right', desc: '매각 후에도 소멸하지 않고 매수인이 승계해야 하는 권리(예: 선순위 근저당).' },
-  { ko: 'ROI', en: 'Return on Investment', desc: '투자수익률. (취득가 대비 처분가·임대수익 차익)을 비율로 표시한 지표.' },
-  { ko: '명도', en: 'Vacant Possession', desc: '기존 점유자(임차인 등)를 내보내 실점유를 확보하는 과정. 유상명도 비용이 발생할 수 있음.' },
-  { ko: '대항력', en: 'Retaliatory Power', desc: '임차인이 제3자(매수인)에게 자신의 임차권을 주장할 수 있는 법적 효력.' },
-  { ko: '확정일자', en: 'Fixed Date', desc: '임대차계약 신고로 부여되는 우선변제권의 기준 시점. 후순위 권리보다 우선한다.' },
-  { ko: '유치권', en: 'Lien', desc: '공사대금 등을 담보하기 위해 물건을 점유·처분할 수 있는 권리. 인수 시 리스크가 큼.' },
+  { ko: '실거래가', en: 'Actual Transaction Price', desc: '부동산이 실제로 거래된 가격. 국토부 실거래가 공개시스템(RTMS)에 신고·공개된다.' },
+  { ko: '평단가', en: 'Price per Area', desc: '거래금액을 면적(㎡)으로 나눈 단위면적당 가격. 층·향·구조 차이를 배제하고 비교할 때 쓴다.' },
+  { ko: '전용면적', en: 'Exclusive Area', desc: '방·거실 등 실제 거주자가 독점 사용하는 면적. 공급면적(주거공용+기타공용)보다 좁다.' },
+  { ko: '공급면적', en: 'Supply Area', desc: '전용면적 + 주거공용면적(복도·계단) + 기타공용면적(엘리베이터·창고). 평수 계산 기준.' },
+  { ko: '매매', en: 'Sale', desc: '소유권을 유상으로 이전하는 거래. 경매·공매와 구분된다.' },
+  { ko: '거래량', en: 'Transaction Volume', desc: '일정 기간 체결된 거래 건수. 시장 활성도·유동성을 가늠하는 지표.' },
+  { ko: '신고가', en: 'Reported Price', desc: '법원 등기부등본상 권리사항 기록 가격이 아닌, 실제 거래계약 금액.' },
+  { ko: '실거래가 공개시스템', en: 'RTMS', desc: '국토교통부가 운영하는 부동산 실거래가 조회 포털. 아파트·오피스텔·상가 등 거래 내역을 공개.' },
+  { ko: '시세', en: 'Market Price', desc: '해당 물건이 거래될 것으로 기대되는 통상적 가격. 실거래가가 시세 형성의 기준.' },
+  { ko: '호가', en: 'Asking Price', desc: '매도인이 부르는 판매 희망가. 실거래가와는 다를 수 있음.' },
 ];
 ---
-<Base title="경매 권리 용어집">
+<Base title="실거래 용어집">
   <div class="gloss">
     <h1>용어집</h1>
-    <p class="sub">권리분석에 자주 등장하는 핵심 용어를 한 줄로 정리했습니다.</p>
+    <p class="sub">실거래 리포트에 자주 등장하는 핵심 용어를 한 줄로 정리했습니다.</p>
     <dl>
       {terms.map((t) => (
         <div class="term">

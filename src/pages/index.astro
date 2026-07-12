@@ -5,38 +5,33 @@ import Base from '../layouts/Base.astro';
 const reports = (await getCollection('reports'))
   .sort((a, b) => b.data.date.localeCompare(a.data.date))
   .slice(0, 3);
-
-const won = (n) => n ? (n / 100000000).toFixed(1) + '억' : '—';
 ---
-<Base title="실제 물건의 ROI를 데이터로 증명">
+
+<Base title="실제 거래가, 데이터로 증명">
   <section class="hero">
     <div class="container">
-      <h1>실제 물건의<br/><span class="grad">ROI를 데이터로 증명.</span></h1>
-      <p class="lead">감정가·최저매각가·권리 리스크를 정량화해 보여주는 프리미엄 경매 리포트. 노이즈 없는 한 건의 신호.</p>
+      <h1>실제 거래가,<br/><span class="grad">데이터로 증명.</span></h1>
+      <p class="lead">국토부 실거래가 공개시스템(RTMS) 기반의 실제 아파트 매매 거래. 평단가·거래량·시세 트렌드를 노이즈 없이 한눈에.</p>
       <div class="stats">
-        <div class="stat"><div class="num">DAILY</div><div class="label">매일 신규 물건 수집</div></div>
-        <div class="stat"><div class="num">ROI</div><div class="label">정량 수익률 계산</div></div>
-        <div class="stat"><div class="num">RISK</div><div class="label">권리·명도 리스크 분석</div></div>
+        <div class="stat"><div class="num">MONTHLY</div><div class="label">매월 실거래 수집</div></div>
+        <div class="stat"><div class="num">PRICE</div><div class="label">평단가·거래량 분석</div></div>
+        <div class="stat"><div class="num">TREND</div><div class="label">지역별 시세 트렌드</div></div>
       </div>
     </div>
   </section>
 
   <section class="section" id="reports">
     <div class="container">
-      <h2>최신 물건 리포트</h2>
-      <p class="sub">정량 스크리닝을 통과한 실제 경매 물건.</p>
+      <h2>최신 실거래 리포트</h2>
+      <p class="sub">국토부 RTMS 기반 실제 매매 거래 데이터.</p>
       <div class="grid">
         {reports.length === 0 ? (
-          <p class="empty">실제 경매 물건 수집을 준비 중입니다. 곧 첫 리포트가 올라옵니다.</p>
+          <p class="empty">실거래 데이터를 수집 중입니다. 곧 첫 리포트가 올라옵니다.</p>
         ) : reports.map((r) => (
           <a class="card" href={`/owl-auction/reports/${r.id}`}>
             <span class="tag">{r.data.region ?? r.data.type}</span>
             <h3>{r.data.title}</h3>
             <p>{r.data.summary}</p>
-            <div class="meta">
-              <span>감정가 {won(r.data.appraisalPrice)}</span>
-              <span class="roi">{r.data.roi ?? '—'}% ROI</span>
-            </div>
           </a>
         ))}
       </div>
@@ -47,8 +42,8 @@ const won = (n) => n ? (n / 100000000).toFixed(1) + '억' : '—';
     <div class="container">
       <div class="cta">
         <div>
-          <h2>권리 용어가 막막하다면</h2>
-          <p class="sub">말소기준권리·인수권리 한 곳에서. <a href="/owl-auction/glossary" class="link">용어집 보기 →</a></p>
+          <h2>실거래 용어가 막막하다면</h2>
+          <p class="sub">평단가·전용면적·실거래가 개념 한 곳에서. <a href="/owl-auction/glossary" class="link">용어집 보기 →</a></p>
         </div>
         <a href="/owl-auction/pro" class="btn">Pro 둘러보기</a>
       </div>
