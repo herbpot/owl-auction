@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://herbpot.github.io/owl-auction/sitemap-index.xml
