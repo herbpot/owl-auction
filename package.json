@@ -1,9 +1,9 @@
 {
-  "name": "nakchal",
+  "name": "silgeorae",
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "낙찰 (NAKCHAL) — 실제 물건의 정량 ROI와 권리분석을 데이터로 증명하는 경매 리포트 (GitHub Pages 사이트)",
+  "description": "실거래 (SILGEORAE) — 실제 물건의 정량 ROI와 권리분석을 데이터로 증명하는 경매 리포트 (GitHub Pages 사이트)",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

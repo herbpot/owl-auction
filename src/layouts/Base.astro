@@ -1,9 +1,9 @@
 ---
-// 낙찰 (NAKCHAL) — B트랙 레이아웃
+// 실거래 (SILGEORAE) — B트랙 레이아웃
 // 인우 님 브랜드 픽 시 아래 BRAND / BRAND_EN / BASE 만 교체하면 끝.
 const { title, description = '실제 물건의 정량 ROI와 권리분석을 데이터로 증명하는 경매 리포트' } = Astro.props;
-const BRAND = '낙찰';
-const BRAND_EN = 'NAKCHAL';
+const BRAND = '실거래';
+const BRAND_EN = 'SILGEORAE';
 const BASE = '/owl-auction';
 ---
 <!doctype html>
@@ -13,6 +13,7 @@ const BASE = '/owl-auction';
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title} · {BRAND}</title>
   <meta name="description" content={description} />
+  <meta property="og:site_name" content={BRAND} />
   <link rel="icon" type="image/svg+xml" href={`${BASE}/favicon.svg`} />
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <style is:global>
@@ -21,8 +22,8 @@ const BASE = '/owl-auction';
       --accent-to: #14b8a6;
       --gradient: linear-gradient(135deg, var(--accent-from), var(--accent-to));
       --bg: #ffffff;
-      --fg: #0a0a0f;
-      --muted: #6b7280;
+      --fg: #1a2233;
+      --muted: #52607a;
       --line: #ececf1;
       --surface: #fbfdfc;
       --radius: 16px;
@@ -31,7 +32,7 @@ const BASE = '/owl-auction';
       --shadow-lg: 0 8px 30px rgba(16,18,30,.10);
     }
     * { box-sizing: border-box; }
-    html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -71,7 +72,7 @@ const BASE = '/owl-auction';
     .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .card { display: block; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-sm); transition: transform .2s ease, box-shadow .2s ease; }
     .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-    .card .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent-to) 12%, white); color: var(--accent-to); margin-bottom: 14px; }
+    .card .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent-to) 14%, var(--surface)); color: var(--accent-to); margin-bottom: 14px; }
     .card h3 { font-size: 18px; font-weight: 750; margin: 0 0 10px; line-height: 1.35; }
     .card p { font-size: 14px; color: var(--muted); margin: 0 0 16px; }
     .card .meta { font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
@@ -89,14 +90,14 @@ const BASE = '/owl-auction';
     .prose .back { display: inline-block; font-size: 14px; color: var(--muted); margin-bottom: 24px; }
     .prose .back:hover { color: var(--fg); }
     .prose .tags { display: flex; gap: 8px; margin-bottom: 14px; align-items: center; }
-    .prose .tag { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent-to) 12%, white); color: var(--accent-to); }
+    .prose .tag { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent-to) 14%, var(--surface)); color: var(--accent-to); }
     .prose h1 { font-size: clamp(26px, 4.5vw, 38px); font-weight: 850; letter-spacing: -0.04em; line-height: 1.2; margin: 0 0 10px; }
     .prose .date { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
     .prose .lede { font-size: 18px; color: var(--muted); margin: 0 0 36px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
     .prose h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; margin: 40px 0 14px; }
     .prose h3 { font-size: 19px; font-weight: 750; margin: 28px 0 10px; }
-    .prose p { font-size: 16px; color: #1f2230; }
-    .prose ul, .prose ol { font-size: 16px; color: #1f2230; padding-left: 22px; }
+    .prose p { font-size: 16px; color: #1a2233; }
+    .prose ul, .prose ol { font-size: 16px; color: #1a2233; padding-left: 22px; }
     .prose li { margin: 6px 0; }
     .prose blockquote { margin: 24px 0; padding: 14px 18px; border-left: 3px solid var(--accent-to); background: var(--surface); border-radius: 0 10px 10px 0; color: var(--muted); font-size: 15px; }
     .prose table { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 14px; }
@@ -147,6 +148,25 @@ const BASE = '/owl-auction';
 
     @keyframes fadeup { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
     .hero, .section, .prose, .gloss, .pro { animation: fadeup .5s ease both; }
+
+    /* Dark mode — prefers-color-scheme */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0f1a;
+        --surface: #131a2a;
+        --fg: #e8edf5;
+        --muted: #9aa7bd;
+        --line: #232c3d;
+        --shadow-sm: 0 1px 2px rgba(0,0,0,.28), 0 4px 16px rgba(0,0,0,.28);
+        --shadow-lg: 0 8px 30px rgba(0,0,0,.45);
+      }
+      .site-header { background: rgba(11,15,26,0.72); }
+      body { color: var(--fg); }
+      .card, .plan, .stat, .cta, .fact, .prose blockquote, .prose th { background: var(--surface); }
+      .card .tag, .prose .tag { background: color-mix(in srgb, var(--accent-to) 18%, var(--surface)); }
+      .plan .cta-btn { background: var(--surface); }
+      .prose p, .prose ul, .prose ol { color: #d7deea; }
+    }
 
     @media (max-width: 760px) {
       .grid, .stats, .plans { grid-template-columns: 1fr; }
